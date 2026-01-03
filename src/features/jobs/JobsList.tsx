@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchJobs } from "./jobsSlice";
+import { Link } from "react-router-dom"; // Assuming react-router-dom is used
 import StatusBadge from "../../components/ui/StatusBadge";
 import JobFilters, { type FilterValues } from "./jobFilters";
 import { ExternalLink, Search, Filter, Loader2 } from "lucide-react";
@@ -127,10 +128,13 @@ const JobsList = () => {
                 <tr key={job.id} className="hover:bg-gray-50 transition-colors">
                   {/* Title & Date */}
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="flex flex-col">
-                      <span className="text-sm font-medium text-gray-900">
-                        {job.title}
-                      </span>
+                    <div className="flex flex-col group">
+                      <Link
+                        to={`/app/jobs/${job.id}`}
+                        className="text-sm font-medium text-gray-900 hover:text-blue-600 group-hover:underline"
+                      >
+                        <span>{job.title}</span>
+                      </Link>
                       <span className="text-xs text-gray-500">
                         {new Date(job.createdAt).toLocaleDateString()}
                       </span>
