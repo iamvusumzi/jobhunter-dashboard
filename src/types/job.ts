@@ -8,7 +8,7 @@ export type RecruitmentStatus =
   | "OFFER"
   | "REJECTED_BY_USER"
   | "REJECTED_BY_COMPANY";
-export type AnalysisStatus = "PENDING" | "COMPLETED" | "FAILED";
+export type AnalysisStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "FAILED";
 
 export interface JobListing {
   id: number; // UUID

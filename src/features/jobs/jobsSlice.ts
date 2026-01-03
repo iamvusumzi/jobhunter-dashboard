@@ -67,6 +67,20 @@ export const updateJobStatus = createAsyncThunk<
   }
 });
 
+export const reAnalyseJob = createAsyncThunk<void, number>(
+  "jobs/reAnalyse",
+  async (jobId, { rejectWithValue }) => {
+    try {
+      await api.post(`/api/v1/jobs/${jobId}/analyse`);
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      const message =
+        error.response?.data?.message || "Failed to re-analyse job.";
+      return rejectWithValue(message);
+    }
+  }
+);
+
 // --- State ---
 
 interface JobsState {
@@ -153,6 +167,17 @@ const jobsSlice = createSlice({
           state.selectedJob.recruitmentStatus =
             action.payload.recruitmentStatus;
         }
+      })
+      .addCase(reAnalyseJob.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(reAnalyseJob.fulfilled, (state) => {
+        state.loading = false;
+      })
+      .addCase(reAnalyseJob.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       });
   },
 });

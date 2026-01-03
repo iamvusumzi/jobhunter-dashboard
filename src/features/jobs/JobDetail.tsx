@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { fetchJobById, updateJobStatus } from "./jobsSlice";
+import { fetchJobById, reAnalyseJob, updateJobStatus } from "./jobsSlice";
+import { showToast } from "../../components/ui/uiSlice";
 import StatusBadge from "../../components/ui/StatusBadge";
 import {
   ArrowLeft,
@@ -10,6 +11,7 @@ import {
   MapPin,
   Building,
   BrainCircuit,
+  RefreshCw,
 } from "lucide-react";
 import { type RecruitmentStatus } from "../../types/job";
 
@@ -29,13 +31,43 @@ const JobDetail = () => {
     }
   }, [dispatch, id]);
 
-  const handleStatusChange = (newStatus: RecruitmentStatus) => {
+  const handleStatusChange = async (newStatus: RecruitmentStatus) => {
     if (job) {
-      dispatch(updateJobStatus({ id: job.id, status: newStatus }));
+      console.log("Changing status to:", newStatus);
+      try {
+        await dispatch(
+          updateJobStatus({ id: job.id, status: newStatus })
+        ).unwrap();
+        console.log("Status updated successfully");
+        dispatch(
+          showToast({
+            message: `Status updated to ${newStatus}`,
+            type: "success",
+          })
+        );
+      } catch (err) {
+        dispatch(showToast({ message: err as string, type: "error" }));
+      }
     }
   };
 
-  if (loading) {
+  const handleReAnalyse = async () => {
+    if (job) {
+      try {
+        await dispatch(reAnalyseJob(Number(id))).unwrap();
+        dispatch(
+          showToast({
+            message: "Job analysis queued successfully!",
+            type: "success",
+          })
+        );
+      } catch (err) {
+        dispatch(showToast({ message: err as string, type: "error" }));
+      }
+    }
+  };
+
+  if (loading && !job) {
     return (
       <div className="p-8 text-center text-gray-500">
         Loading job details...
@@ -130,6 +162,23 @@ const JobDetail = () => {
           >
             Dismiss
           </button>
+
+          <div className="relative group sm:ml-auto">
+            <button
+              onClick={handleReAnalyse}
+              disabled={loading}
+              className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors disabled:opacity-50"
+            >
+              <RefreshCw
+                className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`}
+              />
+              Re-analyse
+            </button>
+            <div className="absolute bottom-full right-0 mb-2 w-48 px-2 py-1.5 bg-gray-800 text-white text-xs rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10 text-center">
+              Re-run AI analysis to refresh the compatibility score and
+              rationale.
+            </div>
+          </div>
         </div>
       </div>
 

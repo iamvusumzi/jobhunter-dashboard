@@ -131,7 +131,7 @@ const JobsList = () => {
                     <div className="flex flex-col group">
                       <Link
                         to={`/app/jobs/${job.id}`}
-                        className="text-sm font-medium text-gray-900 hover:text-blue-600 group-hover:underline"
+                        className="text-sm font-medium text-gray-900 hover:text-blue-600"
                       >
                         <span>{job.title}</span>
                       </Link>

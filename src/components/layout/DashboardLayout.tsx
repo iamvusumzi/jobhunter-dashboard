@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import clsx from "clsx";
+import Toast from "../ui/Toast";
 
 const DashboardLayout = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -28,6 +29,7 @@ const DashboardLayout = () => {
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
+          <Toast />
         </main>
       </div>
     </div>
