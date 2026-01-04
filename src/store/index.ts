@@ -7,11 +7,13 @@ import storage from "redux-persist/lib/storage";
 import authReducer from "../features/auth/authSlice";
 import jobsReducer from "../features/jobs/jobsSlice";
 import uiReducer from "../components/ui/uiSlice";
+import executionsReducer from "../features/executions/executionsSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   jobs: jobsReducer,
   ui: uiReducer,
+  executions: executionsReducer,
 });
 
 const persistConfig = {
