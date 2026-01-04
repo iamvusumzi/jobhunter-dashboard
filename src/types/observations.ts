@@ -16,6 +16,7 @@ export interface ExecutionResponse {
 export interface SourceLog {
   sourceName: string;
   jobsFound: number;
+  jobsFiltered: number;
   success: boolean;
   error?: string;
 }

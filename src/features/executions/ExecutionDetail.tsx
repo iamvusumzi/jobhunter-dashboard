@@ -140,6 +140,9 @@ const ExecutionDetail = () => {
                 Jobs Found
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                Jobs Filtered
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Message
               </th>
             </tr>
@@ -169,6 +172,9 @@ const ExecutionDetail = () => {
                   </td>
                   <td className="px-6 py-4 text-gray-700 font-mono text-sm">
                     {log.jobsFound}
+                  </td>
+                  <td className="px-6 py-4 text-gray-700 font-mono text-sm">
+                    {log.jobsFiltered}
                   </td>
                   <td
                     className="px-6 py-4 text-gray-500 text-sm max-w-md truncate"
