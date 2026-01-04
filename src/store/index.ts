@@ -9,6 +9,7 @@ import jobsReducer from "../features/jobs/jobsSlice";
 import uiReducer from "../components/ui/uiSlice";
 import executionsReducer from "../features/executions/executionsSlice";
 import searchConfigReducer from "../features/settings/searchConfigSlice";
+import profileReducer from "../features/settings/profile/profileSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   ui: uiReducer,
   executions: executionsReducer,
   searchConfig: searchConfigReducer,
+  profile: profileReducer,
 });
 
 const persistConfig = {

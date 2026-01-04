@@ -11,6 +11,7 @@ import JobDetail from "../features/jobs/JobDetail";
 import ExecutionsList from "../features/executions/ExecutionsList";
 import SearchConfigPage from "../features/settings/SearchConfigPage";
 import ExecutionDetail from "../features/executions/ExecutionDetail";
+import ProfilePage from "../features/settings/profile/ProfilePage";
 
 const AppRouter = () => {
   return (
@@ -29,6 +30,7 @@ const AppRouter = () => {
           <Route path="/app/executions/:id" element={<ExecutionDetail />} />
 
           <Route path="/app/settings/search" element={<SearchConfigPage />} />
+          <Route path="/app/settings/profile" element={<ProfilePage />} />
         </Route>
       </Route>
 
