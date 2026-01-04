@@ -13,7 +13,9 @@ const ExecutionsList = () => {
 
   useEffect(() => {
     dispatch(fetchRecentExecutions(10));
+  }, [dispatch]);
 
+  useEffect(() => {
     const interval = setInterval(() => {
       if (
         items.length > 0 &&

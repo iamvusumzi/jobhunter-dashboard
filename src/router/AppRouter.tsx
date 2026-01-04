@@ -9,7 +9,7 @@ import DashboardHome from "../features/dashboard/DashboardHome";
 import JobsList from "../features/jobs/JobsList";
 import JobDetail from "../features/jobs/JobDetail";
 import ExecutionsList from "../features/executions/ExecutionsList";
-import SearchSettings from "../features/settings/SearchSettings";
+import SearchConfigPage from "../features/settings/SearchConfigPage";
 import ExecutionDetail from "../features/executions/ExecutionDetail";
 
 const AppRouter = () => {
@@ -28,7 +28,7 @@ const AppRouter = () => {
           <Route path="/app/executions" element={<ExecutionsList />} />
           <Route path="/app/executions/:id" element={<ExecutionDetail />} />
 
-          <Route path="/app/settings/search" element={<SearchSettings />} />
+          <Route path="/app/settings/search" element={<SearchConfigPage />} />
         </Route>
       </Route>
 
