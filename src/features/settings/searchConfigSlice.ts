@@ -9,7 +9,9 @@ export const fetchSearchConfigs = createAsyncThunk<SearchCriteria[]>(
   "searchConfig/fetchAll",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get<SearchCriteria[]>("/api/v1/config/search");
+      const response = await api.get<SearchCriteria[]>(
+        "/api/v1/settings/search"
+      );
       return response.data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
@@ -28,13 +30,13 @@ export const saveSearchConfig = createAsyncThunk<
     // If ID exists, it's an UPDATE (PUT), else CREATE (POST)
     if (config.id) {
       const response = await api.put<SearchCriteria>(
-        `/api/v1/config/search/${config.id}`,
+        `/api/v1/settings/search/${config.id}`,
         config
       );
       return response.data;
     } else {
       const response = await api.post<SearchCriteria>(
-        "/api/v1/config/search",
+        "/api/v1/settings/search",
         config
       );
       return response.data;
@@ -51,7 +53,7 @@ export const deleteSearchConfig = createAsyncThunk<number, number>(
   "searchConfig/delete",
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/api/v1/config/search/${id}`);
+      await api.delete(`/api/v1/settings/search/${id}`);
       return id;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
@@ -67,8 +69,8 @@ export const toggleSearchStatus = createAsyncThunk<
   { id: number; isActive: boolean }
 >("searchConfig/toggle", async ({ id, isActive }, { rejectWithValue }) => {
   try {
-    // PATCH /api/v1/config/search/{id}/toggle
-    await api.patch(`/api/v1/config/search/${id}/toggle`, null);
+    // PATCH /api/v1/settings/search/{id}/toggle
+    await api.patch(`/api/v1/settings/search/${id}/toggle`, null);
     return { id, isActive };
   } catch (err) {
     const error = err as AxiosError<{ message: string }>;
