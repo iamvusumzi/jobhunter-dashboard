@@ -10,6 +10,7 @@ import uiReducer from "../components/ui/uiSlice";
 import executionsReducer from "../features/executions/executionsSlice";
 import searchConfigReducer from "../features/settings/searchConfigSlice";
 import profileReducer from "../features/settings/profile/profileSlice";
+import aiConfigReducer from "../features/settings/ai/aiConfigSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   executions: executionsReducer,
   searchConfig: searchConfigReducer,
   profile: profileReducer,
+  aiConfig: aiConfigReducer,
 });
 
 const persistConfig = {

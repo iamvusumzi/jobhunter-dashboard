@@ -3,9 +3,10 @@ import {
   LayoutDashboard,
   Briefcase,
   Activity,
-  Settings,
   Search,
   ChevronsLeft,
+  BrainCircuit,
+  UserCog,
 } from "lucide-react";
 import clsx from "clsx"; // Helper for conditional classes
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -15,9 +16,15 @@ const navItems = [
   { name: "Jobs", path: "/app/jobs", icon: Briefcase, exact: false },
   { name: "Executions", path: "/app/executions", icon: Activity, exact: false },
   {
-    name: "Search Config",
+    name: "Search Rules",
     path: "/app/settings/search",
     icon: Search,
+    exact: false,
+  },
+  {
+    name: "AI Brain",
+    path: "/app/settings/ai-config",
+    icon: BrainCircuit,
     exact: false,
   },
   // { name: 'Stats', path: '/app/stats', icon: PieChart, exact: false }, // Future
@@ -119,13 +126,13 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
                   isCollapsed && "justify-center"
                 )}
               >
-                <Settings
+                <UserCog
                   className={clsx(
                     "h-5 w-5 text-gray-400",
                     !isCollapsed && "mr-3"
                   )}
                 />
-                {!isCollapsed && "System Settings"}
+                {!isCollapsed && "My Profile"}
               </NavLink>
             </Tooltip.Trigger>
             {isCollapsed && (
@@ -135,7 +142,7 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
                   align="center"
                   className="z-50 overflow-hidden rounded-md bg-gray-900 px-3 py-1.5 text-xs text-gray-50 animate-in fade-in-0 zoom-in-95"
                 >
-                  System Settings
+                  My Profile
                 </Tooltip.Content>
               </Tooltip.Portal>
             )}
