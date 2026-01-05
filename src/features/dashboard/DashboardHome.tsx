@@ -41,7 +41,7 @@ const DashboardHome = () => {
 
         <StatCard
           title="Avg Compatibility"
-          value={`${stats.avgCompatibilityScore}%`}
+          value={`${stats.avgCompatibilityScore.toFixed(2)}%`}
           icon={CheckCircle}
           color={
             stats.avgCompatibilityScore > 70 ? "bg-green-500" : "bg-yellow-500"
