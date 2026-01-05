@@ -12,6 +12,7 @@ import searchConfigReducer from "../features/settings/searchConfigSlice";
 import profileReducer from "../features/settings/profile/profileSlice";
 import aiConfigReducer from "../features/settings/ai/aiConfigSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
+import publicReducer from "../features/public/publicSlice";
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   profile: profileReducer,
   aiConfig: aiConfigReducer,
   dashboard: dashboardReducer,
+  public: publicReducer,
 });
 
 const persistConfig = {
