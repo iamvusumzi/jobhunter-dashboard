@@ -13,6 +13,8 @@ import SearchConfigPage from "../features/settings/SearchConfigPage";
 import ExecutionDetail from "../features/executions/ExecutionDetail";
 import ProfilePage from "../features/settings/profile/ProfilePage";
 import AIConfigPage from "../features/settings/ai/AIConfigPage";
+import NotFound from "../features/misc/NotFound";
+import Forbidden from "../features/misc/Forbidden";
 
 const AppRouter = () => {
   return (
@@ -35,8 +37,10 @@ const AppRouter = () => {
           <Route path="/app/settings/ai-config" element={<AIConfigPage />} />
         </Route>
       </Route>
+      <Route path="/403" element={<Forbidden />} />
+      <Route path="/404" element={<NotFound />} />
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   );
 };
