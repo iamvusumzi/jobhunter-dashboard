@@ -1,16 +1,14 @@
 import { LogOut, User as UserIcon, Bell } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
 
 const TopBar = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    window.location.replace("/");
   };
 
   return (
