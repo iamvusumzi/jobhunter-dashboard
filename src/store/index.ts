@@ -1,8 +1,4 @@
-import {
-  configureStore,
-  type UnknownAction,
-  type Reducer,
-} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
@@ -18,7 +14,7 @@ import aiConfigReducer from "../features/settings/ai/aiConfigSlice";
 import dashboardReducer from "../features/dashboard/dashboardSlice";
 import publicReducer from "../features/public/publicSlice";
 
-const appReducer = combineReducers({
+const rootReducer = combineReducers({
   auth: authReducer,
   jobs: jobsReducer,
   ui: uiReducer,
@@ -29,19 +25,6 @@ const appReducer = combineReducers({
   dashboard: dashboardReducer,
   public: publicReducer,
 });
-
-const rootReducer: Reducer = (
-  state: ReturnType<typeof appReducer> | undefined,
-  action: UnknownAction
-) => {
-  if (action.type === "auth/logout") {
-    // 1. Clear the storage engine (localStorage) to prevent stale data on reload
-    storage.removeItem("persist:root");
-    // 2. Reset the state to undefined. This forces all reducers to return their initial state.
-    state = undefined;
-  }
-  return appReducer(state, action);
-};
 
 const persistConfig = {
   key: "root",
@@ -55,7 +38,17 @@ export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false,
+      serializableCheck: {
+        // Redux-persist actions are not serializable, so ignore them to prevent console warnings
+        ignoredActions: [
+          "persist/PERSIST",
+          "persist/REHYDRATE",
+          "persist/PAUSE",
+          "persist/PURGE",
+          "persist/FLUSH",
+          "persist/REGISTER",
+        ],
+      },
     }),
 });
 

@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchJobs } from "./jobsSlice";
 import { Link } from "react-router-dom"; // Assuming react-router-dom is used
 import StatusBadge from "../../components/ui/StatusBadge";
-import JobFilters, { type FilterValues } from "./jobFilters";
+import JobFilters, { type FilterValues } from "./JobFilters";
 import { ExternalLink, Search, Filter, Loader2 } from "lucide-react";
 import type { RecruitmentStatus } from "../../types/job";
 
