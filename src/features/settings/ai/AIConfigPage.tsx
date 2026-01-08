@@ -6,7 +6,7 @@ import type {
   AIConfigFormValues,
   AIAnalysisConfig,
 } from "../../../types/aiConfig";
-import { Save, Cpu, Terminal, MessageSquare, Info, Zap } from "lucide-react";
+import { Save, Terminal, MessageSquare, Info } from "lucide-react";
 
 const AIConfigPage = () => {
   const dispatch = useAppDispatch();
@@ -74,33 +74,6 @@ const AIConfigPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Left Column: Settings */}
         <div className="lg:col-span-2 space-y-6">
-          {/* 1. Model Selection */}
-          <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <div className="flex items-center gap-2 mb-4 text-gray-900 font-semibold border-b border-gray-100 pb-2">
-              <Cpu className="h-5 w-5 text-purple-600" />
-              <h2>Model Selection</h2>
-            </div>
-
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Gemini Model ID
-            </label>
-            <select
-              {...register("modelName")}
-              className="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2.5 bg-white border"
-            >
-              <option value="gemini-1.5-flash">
-                gemini-1.5-flash (Recommended - Fast & Cheap)
-              </option>
-              <option value="gemini-1.5-pro">
-                gemini-1.5-pro (Slower, Higher Reasoning)
-              </option>
-            </select>
-            <div className="mt-2 flex items-center gap-2 text-xs text-amber-600 bg-amber-50 p-2 rounded">
-              <Zap className="h-3 w-3" />
-              Flash is sufficient for 90% of job filtering tasks.
-            </div>
-          </div>
-
           {/* 2. System Instruction */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center gap-2 mb-4 text-gray-900 font-semibold border-b border-gray-100 pb-2">
