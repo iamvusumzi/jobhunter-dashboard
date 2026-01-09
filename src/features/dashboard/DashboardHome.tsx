@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import StatCard from "../../components/ui/StatsCard";
 import ProgressBar from "../../components/ui/ProgressBar";
+import Loader from "../../components/ui/Loader";
 
 const DashboardHome = () => {
   const dispatch = useAppDispatch();
@@ -21,11 +22,7 @@ const DashboardHome = () => {
   }, [dispatch]);
 
   if (loading && !stats)
-    return (
-      <div className="p-12 text-center text-gray-500">
-        Loading mission control...
-      </div>
-    );
+    return <Loader message="Loading dashboard statistics..." />;
   if (!stats) return null;
 
   return (

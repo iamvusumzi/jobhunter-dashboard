@@ -14,6 +14,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { type RecruitmentStatus } from "../../types/job";
+import Loader from "../../components/ui/Loader";
 
 const JobDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -68,11 +69,7 @@ const JobDetail = () => {
   };
 
   if (loading && !job) {
-    return (
-      <div className="p-8 text-center text-gray-500">
-        Loading job details...
-      </div>
-    );
+    return <Loader message="Loading job details..." />;
   }
 
   if (error || !job) {

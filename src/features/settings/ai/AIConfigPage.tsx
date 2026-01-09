@@ -7,6 +7,7 @@ import type {
   AIAnalysisConfig,
 } from "../../../types/aiConfig";
 import { Save, Terminal, MessageSquare, Info } from "lucide-react";
+import Loader from "../../../components/ui/Loader";
 
 const AIConfigPage = () => {
   const dispatch = useAppDispatch();
@@ -42,9 +43,7 @@ const AIConfigPage = () => {
   };
 
   if (loading && !config)
-    return (
-      <div className="p-12 text-center text-gray-500">Loading AI Brain...</div>
-    );
+    return <Loader message="Loading AI configuration..." />;
 
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-12">

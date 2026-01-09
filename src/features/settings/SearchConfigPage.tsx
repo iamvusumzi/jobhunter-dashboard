@@ -10,6 +10,7 @@ import type { SearchCriteria } from "../../types/settings";
 import SearchConfigForm from "./SearchConfigForm";
 import { Plus, Trash2, Edit2, Globe, Calendar, Ban } from "lucide-react";
 import clsx from "clsx";
+import Loader from "../../components/ui/Loader";
 
 const SearchConfigPage = () => {
   const dispatch = useAppDispatch();
@@ -82,7 +83,7 @@ const SearchConfigPage = () => {
       {/* Grid of Cards */}
       <div className="grid grid-cols-1 gap-6">
         {loading && items.length === 0 ? (
-          <p className="text-gray-500">Loading configurations...</p>
+          <Loader message="Loading search configurations..." />
         ) : (
           items.map((config) => (
             <div

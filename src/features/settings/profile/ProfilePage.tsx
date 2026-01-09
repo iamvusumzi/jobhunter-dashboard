@@ -7,6 +7,7 @@ import type {
   ProfileFormValues,
 } from "../../../types/profile";
 import { Save, User, FileText, Briefcase, Loader2, Award } from "lucide-react";
+import Loader from "../../../components/ui/Loader";
 
 const ProfilePage = () => {
   const dispatch = useAppDispatch();
@@ -49,11 +50,7 @@ const ProfilePage = () => {
   };
 
   if (loading && !profile) {
-    return (
-      <div className="p-12 text-center text-gray-500">
-        Loading your profile...
-      </div>
-    );
+    return <Loader message="Loading profile..." />;
   }
 
   return (

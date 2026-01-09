@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import clsx from "clsx";
 import MetricCard from "../../components/ui/MetricCard";
+import Loader from "../../components/ui/Loader";
 
 const ExecutionDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,16 +30,23 @@ const ExecutionDetail = () => {
     }
   }, [dispatch, id]);
 
-  if (loading)
+  if (loading && !exec) {
+    return <Loader message="Loading execution details..." />;
+  }
+
+  if (error || !exec) {
     return (
-      <div className="p-8 text-center text-gray-500">Loading metrics...</div>
-    );
-  if (error || !exec)
-    return (
-      <div className="p-8 text-center text-red-600">
-        {error || "Execution not found"}
+      <div className="p-12 text-center text-red-500">
+        <p>Error loading execution details: {error || "Not found"}</p>
+        <button
+          onClick={() => navigate("/app/executions")}
+          className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+        >
+          Back to Executions
+        </button>
       </div>
     );
+  }
 
   return (
     <div className="space-y-6 max-w-6xl mx-auto">
