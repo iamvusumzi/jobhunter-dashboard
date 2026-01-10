@@ -93,7 +93,7 @@ const PublicLanding = () => {
               label="Match Rate"
               value={
                 stats?.matchRate !== undefined
-                  ? `${(stats.matchRate * 100).toFixed(2)}%`
+                  ? `${stats.matchRate.toFixed(2)}%`
                   : undefined
               }
               icon={ShieldCheck}

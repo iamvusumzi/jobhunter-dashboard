@@ -131,9 +131,9 @@ const jobsSlice = createSlice({
         state.loading = false;
         state.items = action.payload.content;
         state.pagination = {
-          page: action.payload.number,
-          totalPages: action.payload.totalPages,
-          totalElements: action.payload.totalElements,
+          page: action.payload.page.number,
+          totalPages: action.payload.page.totalPages,
+          totalElements: action.payload.page.totalElements,
         };
       })
       .addCase(fetchJobs.rejected, (state, action) => {

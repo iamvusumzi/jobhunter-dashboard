@@ -38,10 +38,12 @@ export interface JobDetail extends JobListing {
 
 export interface Page<T> {
   content: T[];
-  totalPages: number;
-  totalElements: number;
-  number: number; // Current Page (0-indexed)
-  size: number;
+  page: {
+    totalPages: number;
+    totalElements: number;
+    number: number; // Current Page (0-indexed)
+    size: number;
+  };
 }
 
 export interface JobFilters {
