@@ -69,7 +69,10 @@ const PublicLanding = () => {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() =>
-                  window.open("https://github.com/iamvusumzi", "_blank")
+                  window.open(
+                    "https://github.com/iamvusumzi/jobhunter-system",
+                    "_blank"
+                  )
                 }
                 className="px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center shadow-sm"
               >
