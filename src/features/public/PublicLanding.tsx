@@ -49,7 +49,7 @@ const PublicLanding = () => {
 
       <main className="flex-1 pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="text-center max-w-3xl mx-auto mb-16 h-screen">
             <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide mb-6">
               <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
               System Operational • {stats?.version || "v1.0.0"}
@@ -62,9 +62,12 @@ const PublicLanding = () => {
               .
             </h1>
             <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-              An autonomous orchestration engine that ingests job listings from
-              across the web, uses LLMs to analyze compatibility against my
-              resume, and curates a high-signal pipeline.
+              An autonomous, event-driven job-hunting engine designed to operate
+              on my behalf, ingesting listings from across the web, analyzing
+              résumé compatibility using LLMs, delivering real-time
+              notifications, and serving curated insights via a serverless AWS
+              backend to a React frontend—architected for easy extension beyond
+              a single user.
             </p>
             <div className="flex justify-center gap-4">
               <button
