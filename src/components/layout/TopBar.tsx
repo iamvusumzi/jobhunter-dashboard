@@ -23,15 +23,6 @@ const TopBar = () => {
 
       {/* Right side: Actions & Profile */}
       <div className="flex items-center space-x-4">
-        {/* Notification Bell */}
-        <button className="p-2 text-gray-400 hover:text-gray-500 rounded-full hover:bg-gray-100 transition-colors relative">
-          <Bell className="h-5 w-5" />
-          {/* Notification Dot */}
-          <span className="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
-
-        <div className="h-6 w-px bg-gray-200" />
-
         {/* User Profile */}
         <div className="flex items-center space-x-3 pl-1">
           <div className="hidden md:flex flex-col items-end">
