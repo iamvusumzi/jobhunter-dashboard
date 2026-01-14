@@ -16,6 +16,12 @@ const navItems = [
   { name: "Jobs", path: "/app/jobs", icon: Briefcase, exact: false },
   { name: "Executions", path: "/app/executions", icon: Activity, exact: false },
   {
+    name: "Profile",
+    path: "/app/settings/profile",
+    icon: UserCog,
+    exact: false,
+  },
+  {
     name: "Search Rules",
     path: "/app/settings/search",
     icon: Search,
@@ -117,36 +123,6 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
 
         {/* Bottom Links */}
         <div className="p-4 border-t border-gray-200">
-          <Tooltip.Root>
-            <Tooltip.Trigger asChild>
-              <NavLink
-                to="/app/settings/profile"
-                className={clsx(
-                  "flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors",
-                  isCollapsed && "justify-center"
-                )}
-              >
-                <UserCog
-                  className={clsx(
-                    "h-5 w-5 text-gray-400",
-                    !isCollapsed && "mr-3"
-                  )}
-                />
-                {!isCollapsed && "My Profile"}
-              </NavLink>
-            </Tooltip.Trigger>
-            {isCollapsed && (
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  side="right"
-                  align="center"
-                  className="z-50 overflow-hidden rounded-md bg-gray-900 px-3 py-1.5 text-xs text-gray-50 animate-in fade-in-0 zoom-in-95"
-                >
-                  My Profile
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            )}
-          </Tooltip.Root>
           <Tooltip.Root>
             <Tooltip.Trigger asChild>
               <button
