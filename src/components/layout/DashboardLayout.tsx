@@ -9,11 +9,8 @@ const DashboardLayout = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   return (
     <div className="h-screen bg-gray-50">
-      {/* The Sidebar is fixed and handles its own state. We pass state to it. */}
       <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
 
-      {/* Main Content Area */}
-      {/* This container's left padding adjusts based on the sidebar's state */}
       <div
         className={clsx(
           "flex h-full flex-col transition-all duration-300 ease-in-out",
@@ -21,7 +18,7 @@ const DashboardLayout = () => {
         )}
       >
         <header className="h-16 border-b border-gray-200 bg-white shadow-sm z-20 px-6">
-          <TopBar />
+          <TopBar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
         </header>
 
         {/* Scrollable Page Content */}

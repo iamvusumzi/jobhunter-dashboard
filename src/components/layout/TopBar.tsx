@@ -1,24 +1,41 @@
-import { LogOut, User as UserIcon, Bell } from "lucide-react";
+import { Activity, LogOut, User as UserIcon, Menu } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { logout } from "../../features/auth/authSlice";
+import { useNavigate } from "react-router-dom";
 
-const TopBar = () => {
+interface TopBarProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (isCollapsed: boolean) => void;
+}
+
+const TopBar = ({ isCollapsed, setIsCollapsed }: TopBarProps) => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     dispatch(logout());
-    window.location.replace("/");
+    navigate("/");
   };
 
   return (
     <div className="h-full flex items-center justify-between">
       {/* Left side: Breadcrumb or Title (Placeholder for now) */}
-      <div className="flex items-center">
-        <h1 className="text-lg font-semibold text-gray-800">
-          {/* You could use useLocation to show dynamic titles here */}
-          Console
-        </h1>
+      <div className="h-16 flex items-center shrink-0 border-b border-gray-200">
+        <button
+          onClick={() => setIsCollapsed(!isCollapsed)}
+          className="md:hidden mr-3 pr-3 text-gray-400 hover:text-gray-600 hover:bg-gray-50 rounded-lg transition-colors"
+          aria-label="Toggle Sidebar"
+        >
+          <Menu className="h-6 w-6" />
+        </button>
+        <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
+          <Activity className="h-5 w-5 text-white" />
+        </div>
+
+        <span className="ml-3 text-xl font-bold text-gray-900 tracking-tight">
+          JobHunter
+        </span>
       </div>
 
       {/* Right side: Actions & Profile */}

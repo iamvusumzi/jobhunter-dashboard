@@ -6,7 +6,7 @@ import RequireAuth from "../features/auth/RequireAuth";
 import PublicLanding from "../features/public/PublicLanding";
 import LoginPage from "../features/auth/LoginPage";
 import DashboardHome from "../features/dashboard/DashboardHome";
-import JobsList from "../features/jobs/JobsList";
+import JobsPage from "../features/jobs/JobsPage";
 import JobDetail from "../features/jobs/JobDetail";
 import ExecutionsList from "../features/executions/ExecutionsList";
 import SearchConfigPage from "../features/settings/SearchConfigPage";
@@ -26,7 +26,7 @@ const AppRouter = () => {
         <Route element={<DashboardLayout />}>
           <Route path="/app" element={<DashboardHome />} />
 
-          <Route path="/app/jobs" element={<JobsList />} />
+          <Route path="/app/jobs" element={<JobsPage />} />
           <Route path="/app/jobs/:id" element={<JobDetail />} />
 
           <Route path="/app/executions" element={<ExecutionsList />} />
