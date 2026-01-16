@@ -18,7 +18,7 @@ const TopBar = ({ isMobileOpen, setIsMobileOpen }: TopBarProps) => {
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    navigate("/", { replace: true });
   };
 
   return (
