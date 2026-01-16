@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -8,7 +9,7 @@ import {
   BrainCircuit,
   UserCog,
 } from "lucide-react";
-import clsx from "clsx"; // Helper for conditional classes
+import clsx from "clsx";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 const navItems = [
@@ -33,95 +34,84 @@ const navItems = [
     icon: BrainCircuit,
     exact: false,
   },
-  // { name: 'Stats', path: '/app/stats', icon: PieChart, exact: false }, // Future
 ];
 
 interface SidebarProps {
   isCollapsed: boolean;
-  setIsCollapsed: (isCollapsed: boolean) => void;
+  setIsCollapsed: (v: boolean) => void;
+
+  isMobileOpen: boolean;
+  setIsMobileOpen: (v: boolean) => void;
 }
 
-const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
+const Sidebar = ({
+  isCollapsed,
+  setIsCollapsed,
+  isMobileOpen,
+  setIsMobileOpen,
+}: SidebarProps) => {
+  useEffect(() => {
+    if (!isMobileOpen) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isMobileOpen, setIsMobileOpen]);
+
+  const closeMobile = () => setIsMobileOpen(false);
+
   return (
-    <div
-      className={clsx(
-        "fixed top-0 left-0 z-30 h-screen flex-col border-r border-gray-200 bg-white transition-all duration-300 ease-in-out md:flex",
-        isCollapsed ? "w-20 hidden md:flex" : "w-64 flex",
-        isCollapsed ? "-translate-x-full md:translate-x-0" : "translate-x-0"
-      )}
-    >
-      <Tooltip.Provider delayDuration={0}>
-        {/* Brand Logo area */}
-        <div className="p-4 border-t border-gray-200">
-          <Tooltip.Root>
-            <Tooltip.Trigger asChild>
-              <button
-                onClick={() => setIsCollapsed(!isCollapsed)}
-                className={clsx(
-                  "flex items-center w-full px-3 py-2 mt-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors",
-                  isCollapsed && "justify-center"
-                )}
-              >
-                <ChevronsLeft
-                  className={clsx(
-                    "h-5 w-5 text-gray-400 shrink-0 transition-transform duration-300",
-                    isCollapsed && "rotate-180"
-                  )}
-                />
-              </button>
-            </Tooltip.Trigger>
-            {isCollapsed && (
-              <Tooltip.Portal>
-                <Tooltip.Content
-                  side="right"
-                  align="center"
-                  className="z-50 overflow-hidden rounded-md bg-gray-900 px-3 py-1.5 text-xs text-gray-50 animate-in fade-in-0 zoom-in-95"
-                >
-                  Expand
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            )}
-          </Tooltip.Root>
-        </div>
-        {/* Navigation Links */}
-        <nav
-          className={clsx(
-            "flex-1 py-6 space-y-1 overflow-y-auto",
-            isCollapsed ? "px-4" : "px-4"
-          )}
-        >
-          {navItems.map((item) => (
-            <Tooltip.Root key={item.path}>
+    <>
+      {/* Mobile backdrop */}
+      <div
+        className={clsx(
+          "fixed inset-0 z-40 bg-black/30 md:hidden transition-opacity",
+          isMobileOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        )}
+        onClick={closeMobile}
+        aria-hidden="true"
+      />
+
+      <div
+        className={clsx(
+          "fixed top-0 left-0 z-50 h-screen border-r border-gray-200 bg-white transition-all duration-300 ease-in-out",
+          isCollapsed ? "md:w-20" : "md:w-64",
+          "w-72 sm:w-80",
+          isMobileOpen ? "translate-x-0" : "-translate-x-full",
+          "md:translate-x-0"
+        )}
+        role="navigation"
+        aria-label="Sidebar navigation"
+      >
+        <Tooltip.Provider delayDuration={0}>
+          {/* Collapse control (desktop) */}
+          <div className="h-16 px-4 border-b border-gray-200 flex items-center justify-between">
+            {/* Desktop collapse button */}
+            <Tooltip.Root>
               <Tooltip.Trigger asChild>
-                <NavLink
-                  to={item.path}
-                  end={item.exact}
-                  className={({ isActive }) =>
-                    clsx(
-                      "group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
-                      isCollapsed && "justify-center",
-                      isActive
-                        ? "bg-blue-50 text-blue-700"
-                        : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-                    )
+                <button
+                  onClick={() => setIsCollapsed(!isCollapsed)}
+                  className={clsx(
+                    "hidden md:flex items-center px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-50 transition-colors",
+                    isCollapsed && "justify-center w-full"
+                  )}
+                  aria-label={
+                    isCollapsed ? "Expand sidebar" : "Collapse sidebar"
                   }
                 >
-                  {({ isActive }) => (
-                    <>
-                      <item.icon
-                        className={clsx(
-                          "h-5 w-5 shrink-0 transition-colors",
-                          !isCollapsed && "mr-3",
-                          isActive
-                            ? "text-blue-600"
-                            : "text-gray-400 group-hover:text-gray-500"
-                        )}
-                      />
-                      {!isCollapsed && item.name}
-                    </>
-                  )}
-                </NavLink>
+                  <ChevronsLeft
+                    className={clsx(
+                      "h-5 w-5 text-gray-400 shrink-0 transition-transform duration-300",
+                      isCollapsed && "rotate-180"
+                    )}
+                  />
+                  {!isCollapsed && <span className="ml-3">Collapse</span>}
+                </button>
               </Tooltip.Trigger>
+
               {isCollapsed && (
                 <Tooltip.Portal>
                   <Tooltip.Content
@@ -129,17 +119,78 @@ const Sidebar = ({ isCollapsed, setIsCollapsed }: SidebarProps) => {
                     align="center"
                     className="z-50 overflow-hidden rounded-md bg-gray-900 px-3 py-1.5 text-xs text-gray-50 animate-in fade-in-0 zoom-in-95"
                   >
-                    {item.name}
+                    Expand
                   </Tooltip.Content>
                 </Tooltip.Portal>
               )}
             </Tooltip.Root>
-          ))}
-        </nav>
+            <div className="md:hidden text-sm font-semibold text-gray-900">
+              Navigation
+            </div>
+          </div>
 
-        {/* Bottom Links */}
-      </Tooltip.Provider>
-    </div>
+          {/* Navigation Links */}
+          <nav className={clsx("flex-1 py-4 space-y-1 overflow-y-auto px-3")}>
+            {navItems.map((item) => (
+              <Tooltip.Root key={item.path}>
+                <Tooltip.Trigger asChild>
+                  <NavLink
+                    to={item.path}
+                    end={item.exact}
+                    onClick={() => {
+                      closeMobile();
+                    }}
+                    className={({ isActive }) =>
+                      clsx(
+                        "group flex items-center px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
+                        isCollapsed && "md:justify-center",
+                        isActive
+                          ? "bg-blue-50 text-blue-700"
+                          : "text-gray-700 hover:bg-gray-50 hover:text-gray-900"
+                      )
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        <item.icon
+                          className={clsx(
+                            "h-5 w-5 shrink-0 transition-colors",
+                            isCollapsed ? "md:mr-0" : "mr-3",
+                            isActive
+                              ? "text-blue-600"
+                              : "text-gray-400 group-hover:text-gray-500"
+                          )}
+                        />
+                        <span
+                          className={clsx(
+                            "md:block",
+                            isCollapsed ? "md:hidden" : ""
+                          )}
+                        >
+                          {item.name}
+                        </span>
+                      </>
+                    )}
+                  </NavLink>
+                </Tooltip.Trigger>
+
+                {isCollapsed && (
+                  <Tooltip.Portal>
+                    <Tooltip.Content
+                      side="right"
+                      align="center"
+                      className="z-50 overflow-hidden rounded-md bg-gray-900 px-3 py-1.5 text-xs text-gray-50 animate-in fade-in-0 zoom-in-95"
+                    >
+                      {item.name}
+                    </Tooltip.Content>
+                  </Tooltip.Portal>
+                )}
+              </Tooltip.Root>
+            ))}
+          </nav>
+        </Tooltip.Provider>
+      </div>
+    </>
   );
 };
 
