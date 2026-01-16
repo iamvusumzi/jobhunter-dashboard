@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchPublicStats, selectPublicStats } from "./publicSlice";
@@ -22,46 +22,76 @@ const PublicLanding = () => {
     dispatch(fetchPublicStats());
   }, [dispatch]);
 
+  const lastRunLabel = useMemo(() => {
+    if (!stats || !stats.lastRunTime) return undefined;
+    const d = new Date(stats.lastRunTime);
+    return d.toLocaleString([], {
+      month: "short",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }, [stats]);
+
+  const handleScrollToArchitecture = () => {
+    document.getElementById("architecture")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+      {/* Skip to content (accessibility) */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[60] bg-white px-3 py-2 rounded-md shadow border border-gray-200 text-sm"
+      >
+        Skip to content
+      </a>
+
       {/* 1. Navbar */}
       <nav className="w-full bg-white/70 backdrop-blur-md border-b border-gray-200 fixed top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
-            <div className="flex items-center gap-2">
-              <div className="bg-blue-600 p-1.5 rounded-lg">
+            <div className="flex items-center gap-3 min-w-0">
+              <div className="bg-blue-600 p-1.5 rounded-lg shrink-0">
                 <Activity className="h-5 w-5 text-white" />
               </div>
-              <span className="font-bold text-xl text-gray-900 tracking-tight">
+              <span className="font-bold text-lg sm:text-xl text-gray-900 tracking-tight truncate">
                 JobHunter
               </span>
             </div>
+
             <button
               onClick={() => navigate("/login")}
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-sm"
+              className="inline-flex items-center px-3 sm:px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-gray-900 hover:bg-gray-800 transition-colors shadow-sm"
             >
-              <LogIn className="h-4 w-4 mr-2" />
+              <LogIn className="h-4 w-4 mr-2 hidden sm:block" />
               Console Login
             </button>
           </div>
         </div>
       </nav>
 
-      <main className="flex-1 pt-24 pb-12">
+      <main id="main" className="flex-1 pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16 h-screen">
-            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide mb-6">
+          {/* Hero */}
+          <div className="text-center max-w-3xl mx-auto mb-14 min-h-[60vh] flex flex-col justify-center">
+            <div className="inline-flex items-center px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-wide mb-6 self-center">
               <span className="flex h-2 w-2 rounded-full bg-blue-600 mr-2 animate-pulse"></span>
               System Operational • {stats?.version || "v1.0.0"}
             </div>
-            <h1 className="text-5xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 leading-tight">
+
+            <h1 className="text-4xl sm:text-6xl font-extrabold text-gray-900 tracking-tight mb-6 leading-tight">
               Automated Intelligence for{" "}
-              <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
                 Career Mobility
               </span>
               .
             </h1>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed">
+
+            <p className="text-base sm:text-xl text-gray-600 mb-8 leading-relaxed">
               An autonomous, event-driven job-hunting engine designed to operate
               on my behalf, ingesting listings from across the web, analyzing
               résumé compatibility using LLMs, delivering real-time
@@ -69,7 +99,8 @@ const PublicLanding = () => {
               backend to a React frontend—architected for easy extension beyond
               a single user.
             </p>
-            <div className="flex justify-center gap-4">
+
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
               <button
                 onClick={() =>
                   window.open(
@@ -77,35 +108,45 @@ const PublicLanding = () => {
                     "_blank"
                   )
                 }
-                className="px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center shadow-sm"
+                className="w-full sm:w-auto px-6 py-3 bg-white border border-gray-300 text-gray-700 font-medium rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-center shadow-sm"
               >
                 <GitBranch className="h-5 w-5 mr-2" />
                 View Architecture
               </button>
+
+              <button
+                onClick={handleScrollToArchitecture}
+                className="w-full sm:w-auto px-6 py-3 bg-gray-900 text-white font-medium rounded-xl hover:bg-gray-800 transition-colors flex items-center justify-center shadow-sm"
+              >
+                How it works
+              </button>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-24 relative">
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-full bg-linear-to-r from-blue-200/30 to-purple-200/30 blur-3xl rounded-full -z-10" />
+          {/* Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20 relative">
+            <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[90%] bg-gradient-to-r from-blue-200/30 to-purple-200/30 blur-3xl rounded-full -z-10" />
 
             <StatBox
               label="Jobs Analyzed"
-              value={stats?.totalJobsAnalysed?.toLocaleString()}
+              value={stats?.totalJobsAnalysed?.toLocaleString() ?? "—"}
               icon={Database}
               color="bg-blue-500"
               loading={loading}
             />
+
             <StatBox
               label="Match Rate"
               value={
                 stats?.matchRate !== undefined
                   ? `${stats.matchRate.toFixed(2)}%`
-                  : undefined
+                  : "—"
               }
               icon={ShieldCheck}
               color="bg-green-500"
               loading={loading}
             />
+
             <StatBox
               label="AI Model"
               value="Gemini 2.5"
@@ -113,35 +154,31 @@ const PublicLanding = () => {
               color="bg-purple-500"
               loading={loading}
             />
+
             <StatBox
               label="Last Run"
-              value={
-                stats?.lastRunTime
-                  ? new Date(stats.lastRunTime).toLocaleTimeString([], {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })
-                  : undefined
-              }
+              value={lastRunLabel ?? "—"}
               icon={Activity}
               color="bg-orange-500"
               loading={loading}
             />
           </div>
 
-          <div className="border-t border-gray-200 pt-24">
-            <h2 className="text-3xl font-bold text-gray-900 text-center mb-16">
+          {/* Architecture */}
+          <div id="architecture" className="border-t border-gray-200 pt-20">
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center mb-12 sm:mb-16">
               The Pipeline Architecture
             </h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 relative">
-              <div className="hidden md:block absolute top-12 left-1/3 w-1/3 h-0.5 bg-linear-to-r from-gray-200 to-gray-200 border-t-2 border-dashed border-gray-300 z-0" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 sm:gap-12 relative">
+              {/* More stable dashed line */}
+              <div className="hidden md:block absolute top-14 left-1/6 right-1/6 h-px border-t border-dashed border-gray-300 z-0" />
 
               <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="h-24 w-24 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center mb-6">
-                  <Database className="h-10 w-10 text-gray-400" />
+                <div className="h-20 w-20 sm:h-24 sm:w-24 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center mb-5 sm:mb-6">
+                  <Database className="h-9 w-9 sm:h-10 sm:w-10 text-gray-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
                   1. Serverless Ingestion
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -152,10 +189,10 @@ const PublicLanding = () => {
               </div>
 
               <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="h-24 w-24 bg-white rounded-2xl border border-blue-100 shadow-lg shadow-blue-100 flex items-center justify-center mb-6">
-                  <Bot className="h-10 w-10 text-blue-600" />
+                <div className="h-20 w-20 sm:h-24 sm:w-24 bg-white rounded-2xl border border-blue-100 shadow-lg shadow-blue-100 flex items-center justify-center mb-5 sm:mb-6">
+                  <Bot className="h-9 w-9 sm:h-10 sm:w-10 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
                   2. Cognitive Analysis
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -166,10 +203,10 @@ const PublicLanding = () => {
               </div>
 
               <div className="relative z-10 flex flex-col items-center text-center">
-                <div className="h-24 w-24 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center mb-6">
-                  <Cpu className="h-10 w-10 text-gray-400" />
+                <div className="h-20 w-20 sm:h-24 sm:w-24 bg-white rounded-2xl border border-gray-200 shadow-sm flex items-center justify-center mb-5 sm:mb-6">
+                  <Cpu className="h-9 w-9 sm:h-10 sm:w-10 text-gray-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-3">
                   3. Decision Engine
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -182,15 +219,15 @@ const PublicLanding = () => {
         </div>
       </main>
 
-      <footer className="bg-white border-t border-gray-200 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      <footer className="bg-white border-t border-gray-200 py-10 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-6">
           <div className="flex items-center gap-2">
             <Activity className="h-5 w-5 text-gray-400" />
             <span className="font-semibold text-gray-500">
               JobHunter System
             </span>
           </div>
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-400 text-center">
             &copy; {new Date().getFullYear()} Vusumzi Msengana. All rights
             reserved.
           </div>
