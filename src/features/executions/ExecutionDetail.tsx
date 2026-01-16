@@ -2,17 +2,11 @@ import { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { fetchExecutionById } from "./executionsSlice";
-import {
-  ArrowLeft,
-  CheckCircle,
-  XCircle,
-  Coins,
-  Activity,
-  Layers,
-} from "lucide-react";
+import { ArrowLeft, CheckCircle, XCircle, Coins, Activity } from "lucide-react";
 import clsx from "clsx";
 import MetricCard from "../../components/ui/MetricCard";
 import Loader from "../../components/ui/Loader";
+import ExecutionSourceLogs from "./ExecutionSourceLogs";
 
 const ExecutionDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -129,82 +123,7 @@ const ExecutionDetail = () => {
       </div>
 
       {/* 3. Source Logs Table */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center gap-2">
-          <Layers className="h-4 w-4 text-gray-500" />
-          <h3 className="font-semibold text-gray-900">Ingestion Source Logs</h3>
-        </div>
-
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Source
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Jobs Found
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Jobs Filtered
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Message
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {exec.sourceLogs && exec.sourceLogs.length > 0 ? (
-              exec.sourceLogs.map((log, idx) => (
-                <tr key={idx} className="group hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-gray-900">
-                    {log.sourceName}
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={clsx(
-                        "inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium border",
-                        {
-                          "bg-green-50 text-green-700 border-green-200":
-                            log.success,
-                          "bg-red-50 text-red-700 border-red-200": !log.success,
-                          "bg-yellow-50 text-yellow-700 border-yellow-200":
-                            log.success === false,
-                        }
-                      )}
-                    >
-                      {log.success ? "Success" : "Failed"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 text-gray-700 font-mono text-sm">
-                    {log.jobsFound}
-                  </td>
-                  <td className="px-6 py-4 text-gray-700 font-mono text-sm">
-                    {log.jobsFiltered}
-                  </td>
-                  <td
-                    className="px-6 py-4 text-gray-500 text-sm max-w-md truncate"
-                    title={log.error}
-                  >
-                    {log.error || "-"}
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={4}
-                  className="px-6 py-8 text-center text-gray-400 italic"
-                >
-                  No source logs available for this execution.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      <ExecutionSourceLogs sourceLogs={exec.sourceLogs} />
     </div>
   );
 };

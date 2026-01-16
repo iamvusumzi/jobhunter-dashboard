@@ -8,7 +8,7 @@ import LoginPage from "../features/auth/LoginPage";
 import DashboardHome from "../features/dashboard/DashboardHome";
 import JobsPage from "../features/jobs/JobsPage";
 import JobDetail from "../features/jobs/JobDetail";
-import ExecutionsList from "../features/executions/ExecutionsList";
+import ExecutionsPage from "../features/executions/ExecutionsPage";
 import SearchConfigPage from "../features/settings/SearchConfigPage";
 import ExecutionDetail from "../features/executions/ExecutionDetail";
 import ProfilePage from "../features/settings/profile/ProfilePage";
@@ -29,7 +29,7 @@ const AppRouter = () => {
           <Route path="/app/jobs" element={<JobsPage />} />
           <Route path="/app/jobs/:id" element={<JobDetail />} />
 
-          <Route path="/app/executions" element={<ExecutionsList />} />
+          <Route path="/app/executions" element={<ExecutionsPage />} />
           <Route path="/app/executions/:id" element={<ExecutionDetail />} />
 
           <Route path="/app/settings/search" element={<SearchConfigPage />} />
