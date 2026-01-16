@@ -1,6 +1,7 @@
 import { Loader2 } from "lucide-react";
 import ExecutionStatusBadge from "./ExecutionStatus";
 import type { ExecutionResponse } from "../../types/observations";
+import { formatDateTimeSAST } from "../../utils/date";
 
 interface ExecutionsTableProps {
   items: ExecutionResponse[];
@@ -36,7 +37,7 @@ const ExecutionsTable = ({
                 <div className="flex items-start justify-between gap-3">
                   <ExecutionStatusBadge status={exec.status} />
                   <span className="text-xs text-gray-500 whitespace-nowrap">
-                    {new Date(exec.startedAt).toLocaleString()}
+                    {formatDateTimeSAST(exec.startedAt)}
                   </span>
                 </div>
 
@@ -110,7 +111,7 @@ const ExecutionsTable = ({
                       <ExecutionStatusBadge status={exec.status} />
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {new Date(exec.startedAt).toLocaleString()}
+                      {formatDateTimeSAST(exec.startedAt)}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                       {exec.totalJobsReceived}

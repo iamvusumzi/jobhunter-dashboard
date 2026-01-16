@@ -2,14 +2,14 @@ import { Link } from "react-router-dom";
 import { ExternalLink, Loader2, Search } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import type { JobListing } from "../../types/job";
+import { formatDateSAST } from "../../utils/date";
 
 interface JobsTableProps {
   items: JobListing[];
   loading: boolean;
 }
 
-const formatDate = (value: string | Date) =>
-  new Date(value).toLocaleDateString();
+const formatDate = (value: string | Date) => formatDateSAST(value);
 
 const JobsTable = ({ items, loading }: JobsTableProps) => {
   const isEmpty = items.length === 0 && !loading;

@@ -8,6 +8,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import type { RecruitmentStatus } from "../../types/job";
+import { formatDateSAST } from "../../utils/date";
 
 type JobHeaderJob = {
   id: number;
@@ -64,7 +65,7 @@ const JobHeaderCard = ({
               </span>
               <span className="flex items-center">
                 <Calendar className="h-4 w-4 mr-1.5 text-gray-400" />
-                {new Date(job.createdAt).toLocaleDateString()}
+                {formatDateSAST(job.createdAt)}
               </span>
             </div>
           </div>

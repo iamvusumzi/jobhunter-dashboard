@@ -25,7 +25,8 @@ const PublicLanding = () => {
   const lastRunLabel = useMemo(() => {
     if (!stats || !stats.lastRunTime) return undefined;
     const d = new Date(stats.lastRunTime);
-    return d.toLocaleString([], {
+    return d.toLocaleString("en-ZA", {
+      timeZone: "Africa/Johannesburg",
       month: "short",
       day: "2-digit",
       hour: "2-digit",

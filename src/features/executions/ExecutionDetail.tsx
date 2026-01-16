@@ -7,6 +7,7 @@ import clsx from "clsx";
 import MetricCard from "../../components/ui/MetricCard";
 import Loader from "../../components/ui/Loader";
 import ExecutionSourceLogs from "./ExecutionSourceLogs";
+import { formatDateTimeSAST } from "../../utils/date";
 
 const ExecutionDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -60,7 +61,7 @@ const ExecutionDetail = () => {
               {exec.id.substring(0, 8)}...
             </span>
             <span className="text-gray-300">•</span>
-            {new Date(exec.startedAt).toLocaleString()}
+            {formatDateTimeSAST(exec.startedAt)}
           </p>
         </div>
 
