@@ -34,6 +34,7 @@ const DashboardHome = () => {
           icon={Briefcase}
           color="bg-blue-600"
           subtext="Jobs waiting for review"
+          to="/app/jobs?status=NEW_MATCH"
         />
 
         <StatCard
