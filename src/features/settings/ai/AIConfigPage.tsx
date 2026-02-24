@@ -130,7 +130,7 @@ const AIConfigPage = () => {
               </li>
               <li className="bg-white p-2 rounded border border-blue-100">
                 <code className="text-xs font-bold text-pink-600 block mb-1">
-                  {"{{JOB_DESC}}"}
+                  {"{{JOB_DESCRIPTION}}"}
                 </code>
                 <span className="text-xs text-gray-600">
                   The full description text (HTML stripped).

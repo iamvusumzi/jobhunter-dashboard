@@ -42,7 +42,7 @@ const JobAnalysisCard = ({ analysisLog }: JobAnalysisCardProps) => {
         {analysisLog.skills && analysisLog.skills.length > 0 && (
           <div>
             <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2">
-              Key Skills Found
+              Missing Skills
             </h3>
             <div className="flex flex-wrap gap-2">
               {analysisLog.skills.map((skill) => (

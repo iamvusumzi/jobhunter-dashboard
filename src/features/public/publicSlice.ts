@@ -14,9 +14,9 @@ export const fetchPublicStats = createAsyncThunk<PublicStats>(
   "public/fetchStats",
   async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:8080";
+      const baseUrl = import.meta.env.VITE_API_URL;
       const response = await axios.get<PublicStats>(
-        `${baseUrl}/api/public/stats`
+        `${baseUrl}/api/public/stats`,
       );
       return response.data;
     } catch (err) {
@@ -30,7 +30,7 @@ export const fetchPublicStats = createAsyncThunk<PublicStats>(
         matchRate: 12.5,
       };
     }
-  }
+  },
 );
 
 interface PublicState {
