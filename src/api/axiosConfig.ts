@@ -1,6 +1,7 @@
 import axios from "axios";
 import { sha256 } from "js-sha256";
 import { store } from "../store";
+import { logout } from "../features/auth/authSlice";
 
 const EMPTY_BODY_SHA256 =
   "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
@@ -37,6 +38,18 @@ api.interceptors.request.use(
     return config;
   },
   (error) => Promise.reject(error),
+);
+
+// Handle token expiration (403 responses)
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 403) {
+      // Token has expired; logout and clear auth state
+      store.dispatch(logout());
+    }
+    return Promise.reject(error);
+  },
 );
 
 export default api;
