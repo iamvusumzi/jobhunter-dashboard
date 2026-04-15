@@ -45,8 +45,8 @@ api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 403) {
-      // Token has expired; logout and clear auth state
       store.dispatch(logout());
+      localStorage.removeItem("persist:auth");
     }
     return Promise.reject(error);
   },
