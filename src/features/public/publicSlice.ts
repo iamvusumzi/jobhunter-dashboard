@@ -14,10 +14,7 @@ export const fetchPublicStats = createAsyncThunk<PublicStats>(
   "public/fetchStats",
   async () => {
     try {
-      const baseUrl = import.meta.env.VITE_API_URL;
-      const response = await axios.get<PublicStats>(
-        `${baseUrl}/api/public/stats`,
-      );
+      const response = await axios.get<PublicStats>("/api/public/stats");
       return response.data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
